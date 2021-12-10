@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'io.github.alerithe'
+version '0.1'
+
+sourceCompatibility = targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    shade
+
+    compileOnly.extendsFrom(shade)
+}
+
+dependencies {
+    shade 'org.javassist:javassist:+'
+}
+
+jar {
+    manifest { from file('src/main/resources/META-INF/MANIFEST.MF') }
+
+    from configurations.shade.collect { it.isDirectory() ? it : zipTree(it) }
+}

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: io.github.alerithe.log4jpatcher.Log4JPatcher
+Premain-Class: io.github.alerithe.log4jpatcher.Log4JPatcher
+Can-Retransform-Classes: true
