@@ -4,7 +4,7 @@ Java Agent that disables Apache Log4J's JNDI Lookup.
 
 ## How to Use
 
-Download the [log4j-patcher](https://alerithe.github.io/log4j-patcher/build/libs/log4j-patcher-0.1.jar) JAR
+Download the [log4j-patcher](https://alerithe.github.io/log4j-patcher/log4j-patcher-0.1.jar) JAR
 
 To use Java Agents, you specify them with the `-javaagent` JVM argument.
 
