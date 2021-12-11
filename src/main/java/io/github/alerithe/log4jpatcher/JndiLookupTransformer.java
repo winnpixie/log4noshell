@@ -19,12 +19,16 @@ public class JndiLookupTransformer implements ClassFileTransformer {
 
         try {
             ClassPool cPool = ClassPool.getDefault();
+            cPool.appendClassPath(className);
+
             CtClass ctJndiLookupClass = cPool.getCtClass(CLASS_NAME);
-            CtMethod ctLookupMethod = ctJndiLookupClass.getDeclaredMethod("lookup");
+            CtMethod ctLookupMethod = ctJndiLookupClass.getMethod("lookup", "(Lorg/apache/logging/log4j/core/LogEvent;Ljava/lang/String;)Ljava/lang/String;");
             ctLookupMethod.setBody("{return null;}");
 
+            Log4JPatcher.LOGGER.info("Applying patches to JndiLookup#lookup!");
             return ctJndiLookupClass.toBytecode();
         } catch (NotFoundException | CannotCompileException | IOException e) {
+            Log4JPatcher.LOGGER.info("Could not apply patches to JndiLookup#lookup!");
             e.printStackTrace();
         }
 

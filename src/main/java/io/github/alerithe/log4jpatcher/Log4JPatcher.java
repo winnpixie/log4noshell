@@ -12,9 +12,7 @@ public class Log4JPatcher {
     }
 
     public static void premain(String args, Instrumentation inst) {
-        System.out.println("Can you hear me?");
         LOGGER.info("Hello from Log4J-Patcher!");
-
         inst.addTransformer(new JndiLookupTransformer());
     }
 }
