@@ -26,5 +26,5 @@ For servers owners, Spigot, Paper, Fabric, and many other projects (ex: Purpur) 
         - (ex: `-javaagent:log4j-patcher-0.1.jar -Xms2G -Xms2G...`)
     6. Click *Save*
 - Server Steps (1.7+):
-    1. Add`-javaagent:log4j-patcher-0.1.jar` right before the `-jar` in your launch/start/run command
+    1. Add `-javaagent:log4j-patcher-0.1.jar` right before the `-jar` in your launch/start/run command
         - (ex: `java -javaagent:log4j-patcher-0.1.jar -jar SpigotServer.jar --nogui`)
