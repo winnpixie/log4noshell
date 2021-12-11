@@ -19,7 +19,7 @@ public class JndiLookupTransformer implements ClassFileTransformer {
 
         try {
             ClassPool cPool = ClassPool.getDefault();
-            cPool.appendClassPath(className);
+            cPool.appendClassPath(new ByteArrayClassPath(className, classfileBuffer));
 
             CtClass ctJndiLookupClass = cPool.getCtClass(CLASS_NAME);
             CtMethod ctLookupMethod = ctJndiLookupClass.getMethod("lookup", "(Lorg/apache/logging/log4j/core/LogEvent;Ljava/lang/String;)Ljava/lang/String;");

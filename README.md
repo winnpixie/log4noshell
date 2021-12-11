@@ -1,7 +1,7 @@
 # log4j-patcher
 Java Agent that disables Apache Log4J's JNDI Lookup.
 
-This is for [CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228)
+This is for [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)
 
 If you can, use the latest available version of Log4J, as this was fixed in Log4J 2.15.0.
 
