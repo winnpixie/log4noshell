@@ -11,10 +11,9 @@ To use Java Agents, you specify them with the `-javaagent` JVM argument.
 Example: `java -jar -javaagent:path/to/MyAgent.jar YourApplication.jar`
 
 ### ***Minecraft***
-For the client, Log4NoShell is not necessary if you are running MC **1.12 or higher**.
+For the client, Log4NoShell is not necessary if you are running MC **1.12 or higher**. For servers admins, Spigot, Paper, Fabric, and many other projects (ex: Purpur) have updated to fix this issue.
 
-For servers owners, Spigot, Paper, Fabric, and many other projects (ex: Purpur) have updated to fix this issue.
-
+First and foremost, please read [this](https://www.minecraft.net/en-us/article/important-message--security-vulnerability-java-edition) article about Mojang's response to the matter.
 - Client Steps (1.7 - 1.11.2):
     1. Go to the *Installations* tab in the launcher
     2. Click on the **three dots** on the **right** side of the version you'd like to use
