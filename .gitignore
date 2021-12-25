@@ -1,5 +1,13 @@
+# Gradle
 .gradle/
-.idea/
 build/
+
+# IntelliJ
+.idea/ 
+
+# VS Code
 bin/
 .vscode/
+
+# macOS
+.DS_Store

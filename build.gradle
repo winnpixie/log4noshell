@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'io.github.alerithe'
-version '0.1'
+version '0.2'
 
 sourceCompatibility = targetCompatibility = 1.8
 
@@ -18,10 +18,14 @@ configurations {
 }
 
 dependencies {
-    shade 'org.javassist:javassist:+'
+    shade 'org.ow2.asm:asm:+'
+    shade 'org.ow2.asm:asm-tree:+'
 }
 
 jar {
+    // Got a really dumb error on macOS, apparently this is a decent solution.
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    
     manifest { from file('src/main/resources/META-INF/MANIFEST.MF') }
 
     from configurations.shade.collect { it.isDirectory() ? it : zipTree(it) }
