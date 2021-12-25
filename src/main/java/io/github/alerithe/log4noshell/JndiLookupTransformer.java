@@ -14,7 +14,7 @@ import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 public class JndiLookupTransformer implements ClassFileTransformer {
-    private static final String TARGET_CLASS_NAME = "org.apache.logging.log4j.core.lookup.EnvironmentLookup";
+    private static final String TARGET_CLASS_NAME = "org.apache.logging.log4j.core.lookup.JndiLookup";
     private static final String TARGET_METHOD_NAME = "lookup";
     private static final String TARGET_METHOD_DESC = "(Lorg/apache/logging/log4j/core/LogEvent;Ljava/lang/String;)Ljava/lang/String;";
 
