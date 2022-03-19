@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-Main-Class: io.github.alerithe.log4noshell.PatchAgent
-Premain-Class: io.github.alerithe.log4noshell.PatchAgent
+Main-Class: tk.hannah.log4noshell.PatchAgent
+Premain-Class: tk.hannah.log4noshell.PatchAgent
 Can-Retransform-Classes: true

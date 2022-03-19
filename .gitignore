@@ -1,13 +1,6 @@
-# Gradle
-.gradle/
-build/
-
 # IntelliJ
-.idea/ 
+.idea/
 
-# VS Code
-bin/
-.vscode/
-
-# macOS
-.DS_Store
+# Maven
+target/
+dependency-reduced-pom.xml

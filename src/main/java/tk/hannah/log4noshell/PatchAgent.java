@@ -1,4 +1,4 @@
-package io.github.alerithe.log4noshell;
+package tk.hannah.log4noshell;
 
 import java.lang.instrument.Instrumentation;
 import java.util.logging.Logger;

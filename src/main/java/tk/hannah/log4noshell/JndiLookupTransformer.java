@@ -1,17 +1,13 @@
-package io.github.alerithe.log4noshell;
+package tk.hannah.log4noshell;
+
+import org.objectweb.asm.*;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnNode;
+import org.objectweb.asm.tree.MethodNode;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
-
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassTooLargeException;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodTooLargeException;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.InsnNode;
-import org.objectweb.asm.tree.MethodNode;
 
 public class JndiLookupTransformer implements ClassFileTransformer {
     private static final String TARGET_CLASS_NAME = "org.apache.logging.log4j.core.lookup.JndiLookup";
@@ -20,7 +16,7 @@ public class JndiLookupTransformer implements ClassFileTransformer {
 
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
-            ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
+                            ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
         if (className == null) {
             return null;
         }
@@ -36,8 +32,7 @@ public class JndiLookupTransformer implements ClassFileTransformer {
             classReader.accept(classNode, ClassReader.SKIP_FRAMES);
 
             for (MethodNode methodNode : classNode.methods) {
-                if (!methodNode.name.equals(TARGET_METHOD_NAME)
-                        || !methodNode.desc.equals(TARGET_METHOD_DESC)) {
+                if (!methodNode.name.equals(TARGET_METHOD_NAME) || !methodNode.desc.equals(TARGET_METHOD_DESC)) {
                     continue;
                 }
 

@@ -3,7 +3,7 @@ Java Agent that disables Apache Log4J's JNDI Lookup, made in response to [CVE-20
 
 If you can, use the latest available version of Log4J, as this vulnerability is fixed as of Log4J 2.15.0.
 
-Otherwise, download the [log4noshell-0.2.jar](https://alerithe.github.io/log4noshell/log4noshell-0.2.jar) JAR and follow the steps below.
+Otherwise, download the [log4noshell-0.2-SNAPSHOT.jar](https://tivuhh.github.io/log4noshell/log4noshell-0.2-SNAPSHOT.jar) JAR and follow the steps below.
 
 ## How to Use
 To use Java Agents, you specify them with the `-javaagent` JVM argument.
