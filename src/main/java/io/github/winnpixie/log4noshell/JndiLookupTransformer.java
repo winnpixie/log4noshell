@@ -1,4 +1,4 @@
-package tk.hannah.log4noshell;
+package io.github.winnpixie.log4noshell;
 
 import org.objectweb.asm.*;
 import org.objectweb.asm.tree.ClassNode;
@@ -10,7 +10,7 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 public class JndiLookupTransformer implements ClassFileTransformer {
-    private static final String TARGET_CLASS_NAME = "org.apache.logging.log4j.core.lookup.JndiLookup";
+    public static final String TARGET_CLASS_NAME = "org.apache.logging.log4j.core.lookup.JndiLookup";
     private static final String TARGET_METHOD_NAME = "lookup";
     private static final String TARGET_METHOD_DESC = "(Lorg/apache/logging/log4j/core/LogEvent;Ljava/lang/String;)Ljava/lang/String;";
 
@@ -25,6 +25,7 @@ public class JndiLookupTransformer implements ClassFileTransformer {
         if (!className.equals(TARGET_CLASS_NAME)) {
             return null;
         }
+        Log4NSAgent.LOGGER.info("Found class " + TARGET_CLASS_NAME);
 
         try {
             ClassReader classReader = new ClassReader(classfileBuffer);
@@ -35,9 +36,10 @@ public class JndiLookupTransformer implements ClassFileTransformer {
                 if (!methodNode.name.equals(TARGET_METHOD_NAME) || !methodNode.desc.equals(TARGET_METHOD_DESC)) {
                     continue;
                 }
+                Log4NSAgent.LOGGER.info("Found method " + TARGET_CLASS_NAME + TARGET_METHOD_DESC);
 
+                Log4NSAgent.LOGGER.info("Patching method");
                 methodNode.instructions.clear();
-
                 methodNode.instructions.add(new InsnNode(Opcodes.ACONST_NULL));
                 methodNode.instructions.add(new InsnNode(Opcodes.ARETURN));
             }
@@ -45,10 +47,10 @@ public class JndiLookupTransformer implements ClassFileTransformer {
             ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_FRAMES);
             classNode.accept(classWriter);
 
-            PatchAgent.LOGGER.info("Applying patches to JndiLookup#lookup!");
+            Log4NSAgent.LOGGER.info("Patching class");
             return classWriter.toByteArray();
         } catch (IllegalStateException | ClassTooLargeException | MethodTooLargeException e) {
-            PatchAgent.LOGGER.info("Could not apply patches to JndiLookup#lookup!");
+            Log4NSAgent.LOGGER.severe("ERROR PATCHING METHOD OR CLASS");
             e.printStackTrace();
         }
 
