@@ -17,15 +17,10 @@ public class JndiLookupTransformer implements ClassFileTransformer {
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
                             ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-        if (className == null) {
-            return null;
-        }
+        if (className == null) return null;
 
         className = className.replace('/', '.');
-        if (!className.equals(TARGET_CLASS_NAME)) {
-            return null;
-        }
-        Log4NSAgent.LOGGER.info("Found class " + TARGET_CLASS_NAME);
+        if (!className.equals(TARGET_CLASS_NAME)) return null;
 
         try {
             ClassReader classReader = new ClassReader(classfileBuffer);
@@ -33,12 +28,9 @@ public class JndiLookupTransformer implements ClassFileTransformer {
             classReader.accept(classNode, ClassReader.SKIP_FRAMES);
 
             for (MethodNode methodNode : classNode.methods) {
-                if (!methodNode.name.equals(TARGET_METHOD_NAME) || !methodNode.desc.equals(TARGET_METHOD_DESC)) {
-                    continue;
-                }
-                Log4NSAgent.LOGGER.info("Found method " + TARGET_CLASS_NAME + TARGET_METHOD_DESC);
+                if (!methodNode.name.equals(TARGET_METHOD_NAME)) continue;
+                if (!methodNode.desc.equals(TARGET_METHOD_DESC)) continue;
 
-                Log4NSAgent.LOGGER.info("Patching method");
                 methodNode.instructions.clear();
                 methodNode.instructions.add(new InsnNode(Opcodes.ACONST_NULL));
                 methodNode.instructions.add(new InsnNode(Opcodes.ARETURN));

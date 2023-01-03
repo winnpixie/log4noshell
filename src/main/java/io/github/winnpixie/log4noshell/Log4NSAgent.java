@@ -7,10 +7,8 @@ public class Log4NSAgent {
     public static final Logger LOGGER = Logger.getLogger(Log4NSAgent.class.getName());
 
     public static void premain(String args, Instrumentation inst) {
-        LOGGER.info("Log4NoShell, a runtime patcher to aid against CVE-2021-44228 (\"Log4Shell\")");
+        LOGGER.info("Log4NoShell, an agent to aid against CVE-2021-44228 (\"Log4Shell\")");
 
-        LOGGER.info("Registering transformer");
         inst.addTransformer(new JndiLookupTransformer());
-        LOGGER.info("Registered transformer");
     }
 }

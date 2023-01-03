@@ -6,23 +6,23 @@
 
     <groupId>io.github.winnpixie</groupId>
     <artifactId>log4noshell</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.4-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
-            <version>9.3</version>
+            <version>9.4</version>
         </dependency>
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm-tree</artifactId>
-            <version>9.3</version>
+            <version>9.4</version>
         </dependency>
     </dependencies>
 
@@ -34,9 +34,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <archive>
-                        <manifestEntries>
-                            <Premain-Class>io.github.winnpixie.log4noshell.Log4NSAgent</Premain-Class>
-                        </manifestEntries>
+                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
                 </configuration>
             </plugin>
@@ -74,5 +72,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
