@@ -1,5 +1,9 @@
-# IntelliJ
-.idea/
-
 # Maven
 target/
+
+# IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
