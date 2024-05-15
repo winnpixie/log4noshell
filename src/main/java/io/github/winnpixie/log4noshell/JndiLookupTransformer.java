@@ -10,7 +10,7 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 public class JndiLookupTransformer implements ClassFileTransformer {
-    public static final String TARGET_CLASS_NAME = "org.apache.logging.log4j.core.lookup.JndiLookup";
+    private static final String TARGET_CLASS_NAME = "org.apache.logging.log4j.core.lookup.JndiLookup";
     private static final String TARGET_METHOD_NAME = "lookup";
     private static final String TARGET_METHOD_DESC = "(Lorg/apache/logging/log4j/core/LogEvent;Ljava/lang/String;)Ljava/lang/String;";
 
@@ -39,10 +39,11 @@ public class JndiLookupTransformer implements ClassFileTransformer {
             ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_FRAMES);
             classNode.accept(classWriter);
 
-            Log4NSAgent.LOGGER.info("Patching class");
+            Log4NoShellAgent.LOGGER.info("Patching class");
             return classWriter.toByteArray();
         } catch (IllegalStateException | ClassTooLargeException | MethodTooLargeException e) {
-            Log4NSAgent.LOGGER.severe("ERROR PATCHING METHOD OR CLASS");
+            Log4NoShellAgent.LOGGER.severe("ERROR PATCHING METHOD OR CLASS");
+
             e.printStackTrace();
         }
 

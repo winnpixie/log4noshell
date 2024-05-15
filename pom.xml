@@ -6,7 +6,7 @@
 
     <groupId>io.github.winnpixie</groupId>
     <artifactId>log4noshell</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.5</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -17,12 +17,12 @@
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
-            <version>9.4</version>
+            <version>9.7</version>
         </dependency>
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm-tree</artifactId>
-            <version>9.4</version>
+            <version>9.7</version>
         </dependency>
     </dependencies>
 
@@ -31,7 +31,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.4.1</version>
                 <configuration>
                     <archive>
                         <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
@@ -41,7 +41,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.5.3</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -49,9 +49,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <minimizeJar>false</minimizeJar>
+                            <shadedArtifactAttached>false</shadedArtifactAttached>
                             <filters>
                                 <filter>
                                     <artifact>org.ow2.asm:asm</artifact>
