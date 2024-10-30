@@ -10,17 +10,14 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 public class JndiLookupTransformer implements ClassFileTransformer {
-    private static final String TARGET_CLASS_NAME = "org.apache.logging.log4j.core.lookup.JndiLookup";
-    private static final String TARGET_METHOD_NAME = "lookup";
-    private static final String TARGET_METHOD_DESC = "(Lorg/apache/logging/log4j/core/LogEvent;Ljava/lang/String;)Ljava/lang/String;";
+    private static final String LOOKUP_CLASS_NAME = "org/apache/logging/log4j/core/lookup/JndiLookup";
+    private static final String LOOKUP_METHOD_NAME = "lookup";
+    private static final String LOOKUP_METHOD_DESC = "(Lorg/apache/logging/log4j/core/LogEvent;Ljava/lang/String;)Ljava/lang/String;";
 
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
                             ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-        if (className == null) return null;
-
-        className = className.replace('/', '.');
-        if (!className.equals(TARGET_CLASS_NAME)) return null;
+        if (!LOOKUP_CLASS_NAME.equals(className)) return null;
 
         try {
             ClassReader classReader = new ClassReader(classfileBuffer);
@@ -28,8 +25,8 @@ public class JndiLookupTransformer implements ClassFileTransformer {
             classReader.accept(classNode, ClassReader.SKIP_FRAMES);
 
             for (MethodNode methodNode : classNode.methods) {
-                if (!methodNode.name.equals(TARGET_METHOD_NAME)) continue;
-                if (!methodNode.desc.equals(TARGET_METHOD_DESC)) continue;
+                if (!methodNode.name.equals(LOOKUP_METHOD_NAME)) continue;
+                if (!methodNode.desc.equals(LOOKUP_METHOD_DESC)) continue;
 
                 methodNode.instructions.clear();
                 methodNode.instructions.add(new InsnNode(Opcodes.ACONST_NULL));
@@ -39,14 +36,11 @@ public class JndiLookupTransformer implements ClassFileTransformer {
             ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_FRAMES);
             classNode.accept(classWriter);
 
-            Log4NoShellAgent.LOGGER.info("Patching class");
+            System.out.println("Attempting to patch JndiLookup#lookup");
             return classWriter.toByteArray();
-        } catch (IllegalStateException | ClassTooLargeException | MethodTooLargeException e) {
-            Log4NoShellAgent.LOGGER.severe("ERROR PATCHING METHOD OR CLASS");
-
+        } catch (ClassTooLargeException | MethodTooLargeException e) {
             e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 }
