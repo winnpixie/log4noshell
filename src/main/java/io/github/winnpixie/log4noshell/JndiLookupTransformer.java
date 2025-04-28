@@ -3,6 +3,7 @@ package io.github.winnpixie.log4noshell;
 import org.objectweb.asm.*;
 
 import java.lang.instrument.ClassFileTransformer;
+import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 public class JndiLookupTransformer implements ClassFileTransformer {
@@ -12,28 +13,29 @@ public class JndiLookupTransformer implements ClassFileTransformer {
 
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
-                            ProtectionDomain protectionDomain, byte[] classfileBuffer) {
+                            ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
         if (!className.equals(CLASS_NAME)) return null;
 
-        ClassReader cr = new ClassReader(classfileBuffer);
-        ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_FRAMES);
-        ClassVisitor cv = new ClassVisitor(Opcodes.ASM9, cw) {
+        ClassReader classReader = new ClassReader(classfileBuffer);
+        ClassWriter classWriter = new ClassWriter(classReader, 0);
+
+        classReader.accept(new ClassVisitor(Opcodes.ASM9, classWriter) {
             @Override
             public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
-                if (!name.equals(METHOD_NAME)) return null;
-                if (!descriptor.equals(METHOD_DESC)) return null;
+                MethodVisitor mv = super.visitMethod(access, name, descriptor, signature, exceptions);
+                if (!name.equals(METHOD_NAME)) return mv;
+                if (!descriptor.equals(METHOD_DESC)) return mv;
 
-                return new MethodVisitor(Opcodes.ASM9, cw.visitMethod(access, name, descriptor, signature, exceptions)) {
-                    @Override
-                    public void visitCode() {
-                        super.visitInsn(Opcodes.ACONST_NULL);
-                        super.visitInsn(Opcodes.ARETURN);
-                    }
-                };
+                mv.visitCode();
+                mv.visitFrame(Opcodes.F_NEW, 3, new Object[3], 1, new Object[1]);
+                mv.visitInsn(Opcodes.ACONST_NULL);
+                mv.visitInsn(Opcodes.ARETURN);
+                mv.visitMaxs(1, 3);
+                mv.visitEnd();
+                return null;
             }
-        };
+        }, 0);
 
-        cr.accept(cv, ClassReader.SKIP_FRAMES);
-        return cw.toByteArray();
+        return classWriter.toByteArray();
     }
 }

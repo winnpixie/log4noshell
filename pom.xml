@@ -6,7 +6,7 @@
 
     <groupId>io.github.winnpixie</groupId>
     <artifactId>log4noshell</artifactId>
-    <version>0.8</version>
+    <version>0.8.1</version>
 
     <properties>
         <javac.version>1.8</javac.version>
@@ -49,6 +49,7 @@
                         </goals>
                         <configuration>
                             <shadedArtifactAttached>false</shadedArtifactAttached>
+                            <minimizeJar>true</minimizeJar>
                             <filters>
                                 <filter>
                                     <artifact>org.ow2.asm:asm</artifact>
