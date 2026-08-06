@@ -9,8 +9,8 @@ To use Java Agents, you must specify them with the `-javaagent` argument. \
 `java -javaagent:path/to/log4noshell-0.8.1.jar -jar Program.jar`
 
 ### **Minecraft**
-Please read [Mojang's response](https://www.minecraft.net/en-us/article/important-message--security-vulnerability-java-edition)
-to determine if you might need this patcher.
+> [!TIP]
+> Please read [Mojang's response](https://www.minecraft.net/en-us/article/important-message--security-vulnerability-java-edition) to determine if you might need this patcher.
 
 - Client:
     1. Go to the *Installations* tab in the launcher
